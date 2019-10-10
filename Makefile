@@ -4,7 +4,6 @@ help:
 	@echo "  check         Format, lint, vet, and test Go code"
 	@echo "  cover         Show test coverage in html"
 	@echo "  deploy        Deploy to IBM Cloud Functions"
-	@echo "  prep          Prepare to develop"
 	@echo "  list          List APIs"
 
 check:
@@ -21,12 +20,9 @@ cover:
 
 deploy:
 	@echo 'Deploy to IBM Cloud Functions'
+	ibmcloud target --cf -o TodoBackendOrg -s dev
+	ibmcloud fn property set --namespace TodoBackendOrg_dev
 	ibmcloud fn deploy
-
-prep:
-	@echo 'Prepare for development by setting resource group'
-	ibmcloud target --cf -o TodoBackendCF -s dev
-	ibmcloud fn property set --namespace TodoBackendCF_dev
 
 list:
 	ibmcloud fn api list

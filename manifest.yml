@@ -1,5 +1,5 @@
 packages:
-  todobackend:
+  TodoBackendFN:
     version: 0.1
     actions:
       todos_create:
