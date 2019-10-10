@@ -17,6 +17,9 @@ packages:
       todos_delete:
         function: src/todos/delete/main.go
         web-export: true
+      todos_deleteall:
+        function: src/todos/deleteall/main.go
+        web-export: true
     apis:
       todos:
         api:
@@ -36,4 +39,7 @@ packages:
               response: http
             todos_create:
               method: POST
+              response: http
+            todos_deleteall:
+              method: DELETE
               response: http
