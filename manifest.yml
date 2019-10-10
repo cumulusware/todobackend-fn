@@ -1,0 +1,39 @@
+packages:
+  todobackend:
+    version: 0.1
+    actions:
+      todos_create:
+        function: src/todos/create/main.go
+        web-export: true
+      todos_readall:
+        function: src/todos/readall/main.go
+        web-export: true
+      todos_read:
+        function: src/todos/read/main.go
+        web-export: true
+      todos_update:
+        function: src/todos/update/main.go
+        web-export: true
+      todos_delete:
+        function: src/todos/delete/main.go
+        web-export: true
+    apis:
+      todos:
+        api:
+          todos/{id}:
+            todos_read:
+              method: GET
+              response: http
+            todos_delete:
+              method: DELETE
+              response: http
+            todos_update:
+              method: PUT
+              response: http
+          todos:
+            todos_readall:
+              method: GET
+              response: http
+            todos_create:
+              method: POST
+              response: http

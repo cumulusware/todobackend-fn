@@ -25,8 +25,8 @@ deploy:
 
 prep:
 	@echo 'Prepare for development by setting resource group'
-	ibmcloud target -g TodoBackend
-	ibmcloud fn property set --namespace todobackend
+	ibmcloud target --cf -o TodoBackendCF -s dev
+	ibmcloud fn property set --namespace TodoBackendCF_dev
 
 list:
 	ibmcloud fn api list
