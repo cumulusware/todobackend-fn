@@ -3,23 +3,41 @@ packages:
     version: 0.1
     actions:
       todos_create:
-        function: src/todos/create/main.go
+        function: resources/todos/create/todos-create-bin.zip
+        runtime: go:1.11
         web-export: true
+        inputs:
+          cloudanturl: ${CLOUDANT_URL}
       todos_readall:
-        function: src/todos/readall/main.go
+        function: resources/todos/readall/todos-readall-bin.zip
+        runtime: go:1.11
         web-export: true
+        inputs:
+          cloudanturl: ${CLOUDANT_URL}
       todos_read:
-        function: src/todos/read/main.go
+        function: resources/todos/read/todos-read-bin.zip
+        runtime: go:1.11
         web-export: true
+        inputs:
+          cloudanturl: ${CLOUDANT_URL}
       todos_update:
-        function: src/todos/update/main.go
+        function: resources/todos/update/todos-update-bin.zip
+        runtime: go:1.11
         web-export: true
+        inputs:
+          cloudanturl: ${CLOUDANT_URL}
       todos_delete:
-        function: src/todos/delete/main.go
+        function: resources/todos/delete/todos-delete-bin.zip
+        runtime: go:1.11
         web-export: true
+        inputs:
+          cloudanturl: ${CLOUDANT_URL}
       todos_deleteall:
-        function: src/todos/deleteall/main.go
+        function: resources/todos/deleteall/todos-deleteall-bin.zip
+        runtime: go:1.11
         web-export: true
+        inputs:
+          cloudanturl: ${CLOUDANT_URL}
     apis:
       todos:
         api:

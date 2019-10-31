@@ -1,3 +1,6 @@
 .env
+set_env.sh
 dist/
 vendor/
+*/vendor/
+*.zip
