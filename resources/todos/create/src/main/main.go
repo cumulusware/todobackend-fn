@@ -32,7 +32,8 @@ func Main(params map[string]interface{}) map[string]interface{} {
 		title = "Foo"
 	}
 	todo := todo{
-		Title: title,
+		Title:     title,
+		Completed: false,
 	}
 
 	// Save the todo to Cloudant
@@ -48,7 +49,8 @@ func Main(params map[string]interface{}) map[string]interface{} {
 }
 
 type todo struct {
-	Title string `json:"title"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
 }
 
 func create(ctx context.Context, url string, todo *todo) (string, error) {

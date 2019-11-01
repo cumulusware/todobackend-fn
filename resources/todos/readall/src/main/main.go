@@ -37,13 +37,15 @@ func Main(params map[string]interface{}) map[string]interface{} {
 }
 
 type todo struct {
-	Title string `json:"title"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
 }
 
 type todoDoc struct {
-	ID    string `json:"_id,omitempty"`
-	Rev   string `json:"_rev,omitempty"`
-	Title string `json:"title"`
+	ID        string `json:"_id,omitempty"`
+	Rev       string `json:"_rev,omitempty"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
 }
 
 func readAll(ctx context.Context, url string) ([]todo, error) {
@@ -96,6 +98,7 @@ func jsonResponse(res map[string]interface{}, code int, data interface{}) map[st
 
 func convertDocToTodo(doc todoDoc) todo {
 	return todo{
-		Title: doc.Title,
+		Title:     doc.Title,
+		Completed: doc.Completed,
 	}
 }
