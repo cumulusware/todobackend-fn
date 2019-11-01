@@ -17,7 +17,6 @@ func Main(params map[string]interface{}) map[string]interface{} {
 	hdrs := make(map[string]string)
 	hdrs["Content-Type"] = "application/json"
 	res["headers"] = hdrs
-	res["statusCode"] = http.StatusOK
 
 	// Get the Cloudant URL
 	cloudantURL, ok := params["cloudanturl"].(string)
@@ -34,8 +33,7 @@ func Main(params map[string]interface{}) map[string]interface{} {
 	}
 
 	// Return the todo with the response.
-	res["body"] = todos
-	return res
+	return jsonResponse(res, http.StatusOK, todos)
 }
 
 type todo struct {
@@ -50,6 +48,8 @@ type todoDoc struct {
 
 func readAll(ctx context.Context, url string) ([]todo, error) {
 	var todos []todo
+
+	// Connect to Clodoudant todos database.
 	client, err := kivik.New(context.TODO(), "couch", url)
 	if err != nil {
 		return todos, fmt.Errorf("error opening couchdb: %s", err)
@@ -83,11 +83,11 @@ func errResponse(res map[string]interface{}, code int, message string) map[strin
 
 func jsonResponse(res map[string]interface{}, code int, data interface{}) map[string]interface{} {
 	content, err := json.Marshal(data)
+	if err != nil {
+		return errResponse(res, http.StatusInternalServerError, err.Error())
+	}
 	if string(content) == "null" {
 		content = []byte("[]")
-	}
-	if err != nil {
-		errResponse(res, http.StatusInternalServerError, err.Error())
 	}
 	res["statusCode"] = code
 	res["body"] = content
