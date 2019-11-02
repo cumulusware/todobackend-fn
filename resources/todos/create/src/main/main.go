@@ -17,7 +17,6 @@ func Main(params map[string]interface{}) map[string]interface{} {
 	hdrs := make(map[string]string)
 	hdrs["Content-Type"] = "application/json"
 	res["headers"] = hdrs
-	res["statusCode"] = http.StatusOK
 
 	// Get the Cloudant URL
 	cloudantURL, ok := params["cloudanturl"].(string)
@@ -37,20 +36,24 @@ func Main(params map[string]interface{}) map[string]interface{} {
 	}
 
 	// Save the todo to Cloudant
-	_, err := create(context.TODO(), cloudantURL, &todo)
+	id, err := create(context.TODO(), cloudantURL, &todo)
 	if err != nil {
 		errMsg := fmt.Sprintf("error saving todo to cloudant URL %s: %s", cloudantURL, err)
 		return errResponse(res, http.StatusInternalServerError, errMsg)
 	}
 
+	// Set the URL for the todo to be returned with the response.
+	baseURL := createURL(params)
+	todo.URL = baseURL + id
+
 	// Return the todo with the response.
-	res["body"] = todo
-	return res
+	return jsonResponse(res, http.StatusOK, todo)
 }
 
 type todo struct {
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
+	URL       string `json:"url"`
 }
 
 func create(ctx context.Context, url string, todo *todo) (string, error) {
@@ -85,4 +88,13 @@ func jsonResponse(res map[string]interface{}, code int, data interface{}) map[st
 	res["statusCode"] = code
 	res["body"] = content
 	return res
+}
+
+func createURL(params map[string]interface{}) string {
+	host := "unknown"
+	protocol := "https://"
+	if headers, ok := params["__ow_headers"].(map[string]interface{}); ok {
+		host = headers["host"].(string)
+	}
+	return protocol + host + params["__ow_path"].(string)
 }

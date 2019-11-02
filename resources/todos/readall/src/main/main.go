@@ -39,6 +39,7 @@ func Main(params map[string]interface{}) map[string]interface{} {
 type todo struct {
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
+	URL       string `json:"url"`
 }
 
 type todoDoc struct {
