@@ -26,7 +26,12 @@ func Main(params map[string]interface{}) map[string]interface{} {
 	}
 
 	// Get all the docs from the todos database.
-	todos, err := readAll(context.TODO(), cloudantURL)
+	baseURL, err := createURL(params)
+	if err != nil {
+		errMsg := fmt.Sprintf("error reading paramters: %s", err)
+		return errResponse(res, http.StatusInternalServerError, errMsg)
+	}
+	todos, err := readAll(context.TODO(), cloudantURL, baseURL)
 	if err != nil {
 		errMsg := fmt.Sprintf("error reading docs from cloudant URL %s: %s", cloudantURL, err)
 		return errResponse(res, http.StatusInternalServerError, errMsg)
@@ -49,11 +54,11 @@ type todoDoc struct {
 	Completed bool   `json:"completed"`
 }
 
-func readAll(ctx context.Context, url string) ([]todo, error) {
+func readAll(ctx context.Context, cloudantURL, baseURL string) ([]todo, error) {
 	var todos []todo
 
 	// Connect to Clodoudant todos database.
-	client, err := kivik.New(context.TODO(), "couch", url)
+	client, err := kivik.New(context.TODO(), "couch", cloudantURL)
 	if err != nil {
 		return todos, fmt.Errorf("error opening couchdb: %s", err)
 	}
@@ -75,6 +80,7 @@ func readAll(ctx context.Context, url string) ([]todo, error) {
 			return todos, fmt.Errorf("error scanning doc: %s", err)
 		}
 		todo := convertDocToTodo(doc)
+		todo.URL = baseURL + doc.ID
 		todos = append(todos, todo)
 	}
 	return todos, nil
@@ -102,4 +108,12 @@ func convertDocToTodo(doc todoDoc) todo {
 		Title:     doc.Title,
 		Completed: doc.Completed,
 	}
+}
+
+func createURL(params map[string]interface{}) (string, error) {
+	host, ok := params["ibmcloudhost"].(string)
+	if !ok {
+		return "", fmt.Errorf("error getting ibm cloud host: %s", host)
+	}
+	return host + params["__ow_path"].(string), nil
 }
