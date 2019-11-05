@@ -43,7 +43,11 @@ func Main(params map[string]interface{}) map[string]interface{} {
 	}
 
 	// Set the URL for the todo to be returned with the response.
-	baseURL := createURL(params)
+	baseURL, err := createURL(params)
+	if err != nil {
+		return errResponse(res, http.StatusInternalServerError, err.Error())
+	}
+
 	todo.URL = baseURL + id
 
 	// Return the todo with the response.
@@ -90,11 +94,10 @@ func jsonResponse(res map[string]interface{}, code int, data interface{}) map[st
 	return res
 }
 
-func createURL(params map[string]interface{}) string {
-	host := "unknown"
-	protocol := "https://"
-	if headers, ok := params["__ow_headers"].(map[string]interface{}); ok {
-		host = headers["host"].(string)
+func createURL(params map[string]interface{}) (string, error) {
+	host, ok := params["ibmcloudhost"].(string)
+	if !ok {
+		return "", fmt.Errorf("error getting ibm cloud host: %s", host)
 	}
-	return protocol + host + params["__ow_path"].(string)
+	return host + params["__ow_path"].(string), nil
 }
