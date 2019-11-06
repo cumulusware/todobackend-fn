@@ -55,7 +55,7 @@ packages:
               method: DELETE
               response: http
             todos_update:
-              method: PUT
+              method: PATCH
               response: http
           todos:
             todos_readall:

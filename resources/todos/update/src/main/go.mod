@@ -1,0 +1,16 @@
+module github.com/cumulusware/todobackend/update
+
+go 1.13
+
+require (
+	github.com/flimzy/diff v0.1.6 // indirect
+	github.com/flimzy/kivik v1.8.1
+	github.com/flimzy/testy v0.1.16 // indirect
+	github.com/go-kivik/couchdb v1.8.1
+	github.com/gopherjs/gopherjs v0.0.0-20190915194858-d3ddacdb130f // indirect
+	github.com/imdario/mergo v0.3.8 // indirect
+	github.com/pkg/errors v0.8.1 // indirect
+	github.com/stretchr/testify v1.4.0 // indirect
+	golang.org/x/net v0.0.0-20191101175033-0deb6923b6d9 // indirect
+	gopkg.in/yaml.v2 v2.2.5 // indirect
+)

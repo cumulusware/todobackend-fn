@@ -61,7 +61,7 @@ type todo struct {
 }
 
 func create(ctx context.Context, url string, todo *todo) (string, error) {
-	client, err := kivik.New(context.TODO(), "couch", url)
+	client, err := kivik.New(ctx, "couch", url)
 	if err != nil {
 		return "", fmt.Errorf("error opening couchdb: %s", err)
 	}
