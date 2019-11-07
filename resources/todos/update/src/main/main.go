@@ -38,6 +38,9 @@ func Main(params map[string]interface{}) map[string]interface{} {
 	if completed, ok := params["completed"].(bool); ok {
 		todo.Completed = completed
 	}
+	if orderFloat, ok := params["order"].(float64); ok {
+		todo.Order = int(orderFloat)
+	}
 
 	// Get the ID from the parameters
 	path, ok := params["__ow_path"].(string)
@@ -117,6 +120,7 @@ type todo struct {
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
 	URL       string `json:"url"`
+	Order     int    `json:"order"`
 }
 
 type todoDoc struct {
@@ -125,12 +129,14 @@ type todoDoc struct {
 	Deleted   bool   `json:"_deleted,omitempty"`
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
+	Order     int    `json:"order"`
 }
 
 func convertTodoToDoc(todo todo) todoDoc {
 	return todoDoc{
 		Title:     todo.Title,
 		Completed: todo.Completed,
+		Order:     todo.Order,
 	}
 }
 
