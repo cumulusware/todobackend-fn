@@ -28,11 +28,18 @@ func Main(params map[string]interface{}) map[string]interface{} {
 	// Read the body of the request to create the todo
 	title, ok := params["title"].(string)
 	if !ok {
-		title = "Foo"
+		errMsg := fmt.Sprintf("error getting title: %v", params)
+		return errResponse(res, http.StatusInternalServerError, errMsg)
 	}
+	orderFloat, ok := params["order"].(float64)
+	if !ok {
+		orderFloat = 0.0
+	}
+
 	todo := todo{
 		Title:     title,
 		Completed: false,
+		Order:     int(orderFloat),
 	}
 
 	// Save the todo to Cloudant
@@ -58,6 +65,7 @@ type todo struct {
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
 	URL       string `json:"url"`
+	Order     int    `json:"order"`
 }
 
 func create(ctx context.Context, url string, todo *todo) (string, error) {

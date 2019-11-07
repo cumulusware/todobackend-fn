@@ -102,6 +102,7 @@ type todo struct {
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
 	URL       string `json:"url"`
+	Order     int    `json:"order"`
 }
 
 type todoDoc struct {
@@ -110,12 +111,14 @@ type todoDoc struct {
 	Deleted   bool   `json:"_deleted,omitempty"`
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
+	Order     int    `json:"order"`
 }
 
 func convertDocToTodo(doc todoDoc) todo {
 	return todo{
 		Title:     doc.Title,
 		Completed: doc.Completed,
+		Order:     doc.Order,
 	}
 }
 
