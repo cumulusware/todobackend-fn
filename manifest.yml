@@ -4,42 +4,42 @@ packages:
     actions:
       todos_create:
         function: resources/todos/create/todos-create-bin.zip
-        runtime: go:1.11
+        runtime: go:default
         web-export: true
         inputs:
           cloudanturl: ${CLOUDANT_URL}
           ibmcloudhost: ${IBMCLOUD_HOST}
       todos_readall:
         function: resources/todos/readall/todos-readall-bin.zip
-        runtime: go:1.11
+        runtime: go:default
         web-export: true
         inputs:
           cloudanturl: ${CLOUDANT_URL}
           ibmcloudhost: ${IBMCLOUD_HOST}
       todos_read:
         function: resources/todos/read/todos-read-bin.zip
-        runtime: go:1.11
+        runtime: go:default
         web-export: true
         inputs:
           cloudanturl: ${CLOUDANT_URL}
           ibmcloudhost: ${IBMCLOUD_HOST}
       todos_update:
         function: resources/todos/update/todos-update-bin.zip
-        runtime: go:1.11
+        runtime: go:default
         web-export: true
         inputs:
           cloudanturl: ${CLOUDANT_URL}
           ibmcloudhost: ${IBMCLOUD_HOST}
       todos_delete:
         function: resources/todos/delete/todos-delete-bin.zip
-        runtime: go:1.11
+        runtime: go:default
         web-export: true
         inputs:
           cloudanturl: ${CLOUDANT_URL}
           ibmcloudhost: ${IBMCLOUD_HOST}
       todos_deleteall:
         function: resources/todos/deleteall/todos-deleteall-bin.zip
-        runtime: go:1.11
+        runtime: go:default
         web-export: true
         inputs:
           cloudanturl: ${CLOUDANT_URL}

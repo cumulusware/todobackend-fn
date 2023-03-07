@@ -25,42 +25,42 @@ todos:
 		cd ..; \
 		zip -r ../todos-create-src.zip *; \
 		cd ..; \
-		docker run -i openwhisk/actionloop-golang-v1.11 -compile main <todos-create-src.zip >todos-create-bin.zip
+		docker run -i openwhisk/actionloop-base -compile main <todos-create-src.zip >todos-create-bin.zip
 	cd resources/todos/readall/src/main; \
 		go mod tidy; \
 		go mod vendor; \
 		cd ..; \
 		zip -r ../todos-readall-src.zip *; \
 		cd ..; \
-		docker run -i openwhisk/actionloop-golang-v1.11 -compile main <todos-readall-src.zip >todos-readall-bin.zip
+		docker run -i openwhisk/actionloop-base -compile main <todos-readall-src.zip >todos-readall-bin.zip
 	cd resources/todos/read/src/main; \
 		go mod tidy; \
 		go mod vendor; \
 		cd ..; \
 		zip -r ../todos-read-src.zip *; \
 		cd ..; \
-		docker run -i openwhisk/actionloop-golang-v1.11 -compile main <todos-read-src.zip >todos-read-bin.zip
+		docker run -i openwhisk/actionloop-base -compile main <todos-read-src.zip >todos-read-bin.zip
 	cd resources/todos/delete/src/main; \
 		go mod tidy; \
 		go mod vendor; \
 		cd ..; \
 		zip -r ../todos-delete-src.zip *; \
 		cd ..; \
-		docker run -i openwhisk/actionloop-golang-v1.11 -compile main <todos-delete-src.zip >todos-delete-bin.zip
+		docker run -i openwhisk/actionloop-base -compile main <todos-delete-src.zip >todos-delete-bin.zip
 	cd resources/todos/deleteall/src/main; \
 		go mod tidy; \
 		go mod vendor; \
 		cd ..; \
 		zip -r ../todos-deleteall-src.zip *; \
 		cd ..; \
-		docker run -i openwhisk/actionloop-golang-v1.11 -compile main <todos-deleteall-src.zip >todos-deleteall-bin.zip
+		docker run -i openwhisk/actionloop-base -compile main <todos-deleteall-src.zip >todos-deleteall-bin.zip
 	cd resources/todos/update/src/main; \
 		go mod tidy; \
 		go mod vendor; \
 		cd ..; \
 		zip -r ../todos-update-src.zip *; \
 		cd ..; \
-		docker run -i openwhisk/actionloop-golang-v1.11 -compile main <todos-update-src.zip >todos-update-bin.zip
+		docker run -i openwhisk/actionloop-base -compile main <todos-update-src.zip >todos-update-bin.zip
 
 deploy: todos
 	@echo 'Deploy to IBM Cloud Functions'
